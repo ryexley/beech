@@ -5,18 +5,23 @@ var should = require("chai").should;
 var Model = require("../src/model");
 var metadata = require("./model.spec.metadata");
 
-var model;
+var _model;
 
 describe("Model", function () {
     beforeEach(function () {
-        model = new Model(metadata);
+        _model = new Model(metadata);
     });
 
     afterEach(function () {
-        model = null;
+        _model = null;
     });
 
     it("should not allow instantiation without a metadata object", function () {
         expect(Model).to.throw(Error);
+    });
+
+    it("should persist passed in metadata internally for reference", function () {
+        expect(_model._metadata).to.exist;
+        expect(_model._metadata.name).to.equal("Person");
     });
 });
