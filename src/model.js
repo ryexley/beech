@@ -20,6 +20,8 @@ _.extend(Model.prototype, events, {
             var _datatype = datatypes[value.type.toLowerCase()];
             var _value = value.defaultValue || _datatype.defaultValue;
 
+            // TODO: this could be more flexible, based on docs here:
+            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty
             Object.defineProperty(this, key, {
                 get: function () {
                     return _value;
@@ -27,12 +29,26 @@ _.extend(Model.prototype, events, {
 
                 set: function (value) {
                     _value = value;
+
+                    this.trigger(key + ".changed", _value);
                 },
                 enumerable: true,
                 configurable: false
             });
         }, this);
     }
+
+    // raw: function () {
+    //     var _this = this;
+    //     delete _this._metadata;
+
+    //     return _this;
+    // },
+
+    // toJSON: function () {
+    //     var _raw = this.raw();
+    //     return JSON.stringify(_raw);
+    // }
 
 });
 

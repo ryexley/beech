@@ -5,12 +5,14 @@ var should = require("chai").should;
 var Model = require("../src/model");
 var metadata = require("./model.spec.metadata");
 
+var __model = new Model(metadata);
+console.log(JSON.stringify(__model, null, 4));
+
 var _model;
 
 describe("Model", function () {
     beforeEach(function () {
         _model = new Model(metadata);
-        // console.log(JSON.stringify(_model, null, 4));
     });
 
     afterEach(function () {
@@ -27,7 +29,15 @@ describe("Model", function () {
     });
 
     it("should initialize attributes", function () {
-        expect(_model.firstName).to.exist;
-        expect(_model.lastName).to.exist;
+        expect(_model).to.have.ownProperty("firstName");
+        expect(_model).to.have.ownProperty("lastName");
+    });
+
+    it("should raise an event after a property value has been changed", function () {
+        _model.on("firstName.changed", function (newValue) {
+            expect(newValue).to.equal("John");
+        });
+
+        _model.firstName = "John";
     });
 });
