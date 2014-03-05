@@ -10,6 +10,7 @@ var _model;
 describe("Model", function () {
     beforeEach(function () {
         _model = new Model(metadata);
+        // console.log(JSON.stringify(_model, null, 4));
     });
 
     afterEach(function () {
