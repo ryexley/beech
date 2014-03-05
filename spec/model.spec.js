@@ -24,4 +24,9 @@ describe("Model", function () {
         expect(_model._metadata).to.exist;
         expect(_model._metadata.name).to.equal("Person");
     });
+
+    it("should initialize attributes", function () {
+        expect(_model.firstName).to.exist;
+        expect(_model.lastName).to.exist;
+    });
 });
